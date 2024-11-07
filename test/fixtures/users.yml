@@ -1,15 +1,6 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  name: MyString
-  email: MyString
-  password_digest: MyString
-  profile_image: MyString
-  bio: MyText
-
-two:
-  name: MyString
-  email: MyString
-  password_digest: MyString
-  profile_image: MyString
-  bio: MyText
+Keisuke:
+  name: Keisuke
+  email: keisuke@example.com
+  password_digest: aaaaaa
+  profile_image: nil
+  bio: text
