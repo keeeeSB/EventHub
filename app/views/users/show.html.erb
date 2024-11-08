@@ -1,2 +1,33 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h2 class="text-center mb-4"><%= @user.name %>さんのプロフィール</h2>
+
+<div class="container d-flex justify-content-center">
+  <div class="col-md-5 border p-4 shadow rounded">
+    
+    <div class="text-center mb-3">
+      <% if @user.profile_image.present? %>
+        <%= image_tag @user.profile_image.url, alt: "プロフィール画像", class: "img-thumbnail rounded-circle", width: "150", height: "150" %>
+      <% else %>
+        <%= image_tag "sample.jpeg", alt: "サンプル画像", class: "img-thumbnail rounded-circle", width: "150", height: "150" %>
+      <% end %>
+    </div>
+
+    <div class="mb-3">
+      <strong>お名前:</strong>
+      <p><%= @user.name %></p>
+    </div>
+
+    <div class="mb-3">
+      <strong>メールアドレス:</strong>
+      <p><%= @user.email %></p>
+    </div>
+
+    <div class="mb-3">
+      <strong>自己紹介:</strong>
+      <p><%= @user.bio.present? ? @user.bio : "自己紹介がありません" %></p>
+    </div>
+
+    <div class="text-center mt-4">
+      <%= link_to "編集", edit_user_path(@user), class: "btn btn-outline-warning" %>
+    </div>
+  </div>
+</div>
