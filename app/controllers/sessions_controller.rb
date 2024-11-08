@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       reset_session
       log_in user
       flash[:success] = "ログインしました。"
-      redirect_to @user
+      redirect_to user
     else
       flash.now[:danger] = "ログインできませんでした。"
       render :new
