@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_login, only: [:show]
 
   def new
     @user = User.new
@@ -7,6 +8,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      reset_session
+      log_in @user
       flash[:success] = "登録できました。"
       redirect_to @user
     else
