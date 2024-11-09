@@ -9,6 +9,7 @@
     <li><%= link_to "ホーム", root_path, class: "nav-link px-2 link-secondary" %></li>
     <% if logged_in? %>
       <li><%= link_to "イベント", new_user_event_path(current_user), class: "nav-link px-2 link-secondary" %></li>
+      <li><%= link_to "お気に入り", user_favorites_path(current_user), class: "nav-link px-2 link-secondary" %></li>
     <% end %>
   </ul>
 
