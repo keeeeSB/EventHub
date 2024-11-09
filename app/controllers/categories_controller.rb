@@ -1,9 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :require_login, only: [:new, :create]
-
-  def new
-    @category = Category.new
-  end
+  before_action :require_login, only: [:create]
 
   def create
     @category = Category.new(category_params)

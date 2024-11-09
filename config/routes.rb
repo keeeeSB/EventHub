@@ -11,5 +11,5 @@ Rails.application.routes.draw do
     end
     resources :favorites, only: [:index]
   end
-  resources :categories
+  resources :categories, only: [:create]
 end
