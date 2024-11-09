@@ -4,6 +4,19 @@
   <% @events.each do |event| %>
     <div class="col-md-6 mb-4">
       <div class="card shadow-sm border-light">
+        <div class="position-absolute top-0 end-0 m-3">
+          <% if current_user.favorites.exists?(event_id: event.id) %>
+            <%= link_to user_event_favorite_path(current_user, event, current_user.favorites.find_by(event_id: event.id)), 
+                        data: { "turbo-method": :delete } do %>
+              <%= image_tag "star-fill.svg", alt: "お気に入り解除", width: 20, height: 20 %>
+            <% end %>
+          <% else %>
+            <%= link_to user_event_favorites_path(current_user, event), 
+                        data: { "turbo-method": :post } do %>
+              <%= image_tag "star.svg", alt: "お気に入り登録", width: 20, height: 20 %>
+            <% end %>
+          <% end %>
+        </div>
         <div class="card-body">
           <h5 class="card-title"><strong><%= event.title %></strong></h5>
           <p class="card-text"><%= event.description.truncate(100) %></p>
