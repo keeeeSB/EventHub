@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'categories/new'
   root "users#new"
   get  "/signup", to: "users#new"
   post "/signup", to: "users#create"
