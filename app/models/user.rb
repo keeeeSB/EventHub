@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :events, dependent: :destroy
+
   has_secure_password
   mount_uploader :profile_image, ProfileImageUploader
 
