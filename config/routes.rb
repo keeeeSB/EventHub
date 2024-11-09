@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
   resources :users do
-    resources :events
+    resources :events do
+      resources :favorites, only: [:create, :destroy]
+    end
   end
   resources :categories
 end
