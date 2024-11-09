@@ -12,9 +12,11 @@
           <% if event.category.present? %>
             <p><strong>カテゴリー:</strong> <%= event.category.name %></p>
           <% end %>
-          <%= link_to "編集", edit_user_event_path(event.user, event), class: "btn btn-warning btn-sm" %>
-          <%= link_to "削除", user_event_path(event.user, event), class: "btn btn-danger btn-sm",
+          <% if event.user == current_user %>
+            <%= link_to "編集", edit_user_event_path(event.user, event), class: "btn btn-warning btn-sm" %>
+            <%= link_to "削除", user_event_path(event.user, event), class: "btn btn-danger btn-sm",
                                                 data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" } %>
+          <% end %>
         </div>
       </div>
     </div>
