@@ -10,4 +10,10 @@ class Event < ApplicationRecord
   validates :description, presence: true
   validates :start_time,  presence: true
   validates :location,    presence: true
+
+  # 開催日時が過ぎていないイベント
+  scope :upcoming, -> { where('start_time >= ?', Time.current) }
+
+  # 開催日時が過ぎたイベント
+  scope :past, -> { where('start_time < ?', Time.current) }
 end
