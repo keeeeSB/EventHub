@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   
   def index
-    @events = Event.all.order(created_at: :desc)
+    @events = Event.left_joins(:joins).group(:id).order('COUNT(joins.id) DESC')
   end
 
   def new
