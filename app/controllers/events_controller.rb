@@ -13,7 +13,11 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = current_user.events.build(event_params)
+    if event_params[:category_id].present?
+      @event = current_user.events.build(event_params.except(:categpry_attributes))
+    else
+      @event = current_user.events.build(event_params)
+    end
     if @event.save
       flash[:success] = "イベントを作成しました。"
       redirect_to root_path
