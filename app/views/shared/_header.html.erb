@@ -8,8 +8,9 @@
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
     <li><%= link_to "ホーム", root_path, class: "nav-link px-2 link-secondary" %></li>
     <% if logged_in? %>
-      <li><%= link_to "イベント", new_user_event_path(current_user), class: "nav-link px-2 link-secondary" %></li>
+      <li><%= link_to "イベント作成", new_user_event_path(current_user), class: "nav-link px-2 link-secondary" %></li>
       <li><%= link_to "お気に入り", user_favorites_path(current_user), class: "nav-link px-2 link-secondary" %></li>
+      <li><%= link_to "参加予定イベント", user_joins_path(current_user), class: "nav-link px-2 link-secondary" %></li>
     <% end %>
   </ul>
 

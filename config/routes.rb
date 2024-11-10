@@ -8,8 +8,10 @@ Rails.application.routes.draw do
   resources :users do
     resources :events do
       resources :favorites, only: [:create, :destroy]
+      resources :joins,     only: [:create, :destroy]
     end
     resources :favorites, only: [:index]
+    resources :joins,     only: [:index]
   end
   resources :categories, only: [:create]
 end
