@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :events do
       resources :favorites, only: [:create, :destroy]
       resources :joins,     only: [:create, :destroy]
+      resources :reviews,   only: [:create, :destroy]
     end
     resources :favorites, only: [:index]
     resources :joins,     only: [:index]
