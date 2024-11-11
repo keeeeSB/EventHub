@@ -8,29 +8,31 @@ class ReviewsController < ApplicationController
     else
       flash.now[:danger] = "レビューを作成できませんでした。"
     end
-    redirect_to user_event_path(@review.event) # 最終的にそのイベント詳細ページへ
+    redirect_to user_event_path(@event.user, @event)
   end
 
   def update
-    @review = current_user.reviews.find_by(parsms[:id])
+    @review = current_user.reviews.find(params[:id])
+    @event = @review.event
     if @review.update(review_params)
       flash[:success] = "レビューを更新しました。"
     else
       flash.now[:danger] = "レビューを更新できませんでした。"
     end
-    redirect_to root_path
+    redirect_to user_event_path(@event.user, @event)
   end
 
   def destroy
-    @review = current_user.reviews.find_by(params[:id])
+    @review = current_user.reviews.find(params[:id])
+    @event = @review.event
     @review.destroy
     flash[:success] = "レビューを削除しました。"
-    redierct_to root_path
+    redierect_to user_event_path(@event.user, @event)
   end
 
   private
 
     def review_params
-      params.require(:review).permit(:body, :rating, :event_id)
+      params.require(:review).permit(:body, :rating, :user_id, :event_id)
     end
 end
