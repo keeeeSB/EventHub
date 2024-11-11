@@ -57,12 +57,20 @@
             <div class="card-body">
               <p><strong><%= review.user.name %></strong> - <%= review.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
               <p><%= review.body %></p>
-              <p>評価: <%= review.rating %>/5</p>
+              <div class="star-display">
+                <% 5.times do |i| %>
+                  <% if i < review.rating %>
+                    <span class="star filled">★</span>
+                  <% else %>
+                    <span class="star">★</span>
+                  <% end %>
+                <% end %>
+              </div>
               <% if review.user == current_user %>
                 <div class="d-flex justify-content-end">
-                  <%= link_to "編集", edit_user_event_review_path(@event.user, @event, review), class: "btn btn-sm btn-outline-primary me-2" %>
-                  <%= link_to "削除", user_event_review_path(@event.user, @event, review), 
-                              method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
+                  <%= link_to "編集", "#", class: "btn btn-sm btn-outline-primary me-2" %>
+                  <%= link_to "削除", user_event_review_path(review.user, @event, review), 
+                                      data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
                 </div>
               <% end %>
             </div>
@@ -74,7 +82,7 @@
     <% if logged_in? %>
       <div class="mt-4">
         <h4 class="mb-3">レビューを投稿する</h4>
-        <%= form_with(model: @review, url: user_event_reviews_path(current_user, @event), local: true) do |f| %>
+        <%= form_with(model: @review, url: user_event_reviews_path(current_user, @event), local: true, scope: :review) do |f| %>
           <div class="mb-3">
             <%= f.label :rating, "評価 (1〜5)", class: "form-label" %>
             <div class="star-rating">

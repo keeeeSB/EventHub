@@ -18,3 +18,12 @@
 .star-rating label:hover ~ label {
   color: #f5c518;
 }
+
+.star {
+  font-size: 24px;
+  color: #ccc; /* 星の枠の色 */
+}
+
+.star.filled {
+  color: #FFD700; /* 塗りつぶされた星の色（ゴールド） */
+}

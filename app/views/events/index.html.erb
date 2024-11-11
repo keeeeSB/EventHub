@@ -31,7 +31,7 @@
           <% end %>
         <% end %>
         <div class="card-body">
-          <%= link_to user_event_path(current_user, event), class: "text-decoration-none text-dark" do %>
+          <%= link_to user_event_path(event.user, event), class: "text-decoration-none text-dark" do %>
             <h5 class="card-title"><strong><%= event.title %></strong></h5>
           <% end %>
           <p class="card-text"><%= event.description.truncate(100) %></p>
