@@ -1,0 +1,102 @@
+<div class="container mt-5">
+  <div class="col-md-8 mx-auto">
+    <div class="card shadow-sm border-light">
+      <div class="card-body">
+        <h3 class="card-title text-center mb-3"><strong><%= @event.title %></strong></h3>
+        <% if logged_in? %>
+          <div class="d-flex justify-content-end">
+            <% if current_user.favorites.exists?(event_id: @event.id) %>
+              <%= link_to user_event_favorite_path(current_user, @event, current_user.favorites.find_by(event_id: @event.id)),
+                          data: { "turbo-method": :delete } do %>
+                <%= image_tag "star-fill.svg", alt: "お気に入り解除", width: 24, height: 24, class: "me-2" %>
+              <% end %>
+            <% else %>
+              <%= link_to user_event_favorites_path(current_user, @event),
+                          data: { "turbo-method": :post } do %>
+                <%= image_tag "star.svg", alt: "お気に入り登録", width: 24, height: 24, class: "me-2" %>
+              <% end %>
+            <% end %>
+            <% if @event.user != current_user %>
+              <% if current_user.joins.exists?(event_id: @event.id) %>
+                <%= link_to "参加取り消し", user_event_join_path(current_user, @event, current_user.joins.find_by(event_id: @event.id)),
+                            data: { "turbo-method": :delete }, class: "btn btn-success btn-sm" %>
+              <% else %>
+                <%= link_to "参加申し込み", user_event_joins_path(current_user, @event),
+                            data: { "turbo-method": :post }, class: "btn btn-outline-success btn-sm" %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+        <hr>
+
+        <p class="card-text mt-3"><%= simple_format(@event.description) %></p>
+
+        <div class="mt-4">
+          <p><strong>開催日時:</strong> <%= @event.start_time.strftime("%Y年%m月%d日 %H:%M") %></p>
+          <p><strong>開催場所:</strong> <%= @event.location %></p>
+          <% if @event.category.present? %>
+            <p><strong>カテゴリー:</strong> <%= @event.category.name %></p>
+          <% end %>
+        </div>
+
+        <% if @event.user == current_user %>
+          <div class="d-flex justify-content-end mt-4">
+            <%= link_to "編集", edit_user_event_path(@event.user, @event), class: "btn btn-warning me-2" %>
+            <%= link_to "削除", user_event_path(@event.user, @event), class: "btn btn-danger",
+                            data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" } %>
+          </div>      
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <% if @reviews.present? %>
+        <h4 class="mb-3">レビュー</h4>
+        <% @reviews.each do |review| %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <p><strong><%= review.user.name %></strong> - <%= review.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+              <p><%= review.body %></p>
+              <p>評価: <%= review.rating %>/5</p>
+              <% if review.user == current_user %>
+                <div class="d-flex justify-content-end">
+                  <%= link_to "編集", edit_user_event_review_path(@event.user, @event, review), class: "btn btn-sm btn-outline-primary me-2" %>
+                  <%= link_to "削除", user_event_review_path(@event.user, @event, review), 
+                              method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if logged_in? %>
+      <div class="mt-4">
+        <h4 class="mb-3">レビューを投稿する</h4>
+        <%= form_with(model: @review, url: user_event_reviews_path(current_user, @event), local: true) do |f| %>
+          <div class="mb-3">
+            <%= f.label :rating, "評価 (1〜5)", class: "form-label" %>
+            <div class="star-rating">
+              <% 5.downto(1) do |i| %>
+                <%= f.radio_button :rating, i, id: "star#{i}" %>
+                <label for="star<%= i %>" class="star">
+                  ★
+                </label>
+              <% end %>
+            </div>
+          </div>
+          <div class="mb-3">
+            <%= f.label :body, "コメント", class: "form-label" %>
+            <%= f.text_area :body, rows: 3, class: "form-control" %>
+          </div>
+          <div class="d-flex justify-content-end">
+            <%= f.submit "投稿する", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-center mt-4">レビューを投稿するには<%= link_to "ログイン", login_path %>してください。</p>
+    <% end %>
+  </div>
+</div>
