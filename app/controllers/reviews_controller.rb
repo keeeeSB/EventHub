@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
-  before_action :require_login, only: [:create, :update, :destroy]
+  before_action :require_login, only: [:create, :edit, :update, :destroy]
+  before_action :set_review, only: [:edit, :update, :destroy]
 
   def create
     @event = Event.find(params[:event_id])
@@ -12,8 +13,11 @@ class ReviewsController < ApplicationController
     redirect_to user_event_path(@event.user, @event)
   end
 
+  def edit
+    @event = @review.event
+  end
+
   def update
-    @review = current_user.reviews.find(params[:id])
     @event = @review.event
     if @review.update(review_params)
       flash[:success] = "レビューを更新しました。"
@@ -24,7 +28,6 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @review = current_user.reviews.find(params[:id])
     @event = @review.event
     @review.destroy
     flash[:success] = "レビューを削除しました。"
@@ -37,5 +40,9 @@ class ReviewsController < ApplicationController
       params.require(:review).permit(:body, :rating).merge(
         user_id: current_user.id, event_id: params[:event_id]
       )
+    end
+
+    def set_review
+      @review = current_user.reviews.find(params[:id])
     end
 end
