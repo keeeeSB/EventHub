@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "events#index"
+  root "events#upcoming"
   get  "/signup", to: "users#new"
   post "/signup", to: "users#create"
   get "/login", to: "sessions#new"
@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy"
   resources :users do
     resources :events do
+      collection do
+        get "upcoming"
+        get "past"
+      end
       resources :favorites, only: [:create, :destroy]
       resources :joins,     only: [:create, :destroy]
       resources :reviews,   only: [:create, :edit, :update, :destroy]

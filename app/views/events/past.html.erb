@@ -1,4 +1,4 @@
-<h2 class="text-center mb-4">未開催イベント一覧</h2>
+<h2 class="text-center mb-4">開催済みイベント一覧</h2>
 
 <div class="row">
   <% @events.each do |event| %>
@@ -18,17 +18,6 @@
               <% end %>
             <% end %>
           </div>
-          <% if event.user != current_user %>
-            <div class="position-absolute top-0 m-3" style="right: 35px;">
-              <% if current_user.joins.exists?(event_id: event.id) %>
-                <%= link_to "参加取り消し", user_event_join_path(current_user, event, current_user.joins.find_by(event_id: event.id)), 
-                            data: { "turbo-method": :delete }, class: "btn btn-success btn-sm" %>
-              <% else %>
-                <%= link_to "参加申し込み", user_event_joins_path(current_user, event), 
-                            data: { "turbo-method": :post }, class: "btn btn-outline-success btn-sm" %>
-              <% end %>
-            </div>
-          <% end %>
         <% end %>
         <div class="card-body">
           <%= link_to user_event_path(event.user, event), class: "text-decoration-none text-dark" do %>
@@ -39,6 +28,13 @@
           <p><strong>開催場所:</strong> <%= event.location %></p>
           <% if event.category.present? %>
             <p><strong>カテゴリー:</strong> <%= event.category.name %></p>
+          <% end %>
+          <% if event.reviews.present? %>
+          <p>
+            <span class="text-success fw-bold"><%= event.reviews.count %></span> 件のレビューがあります。
+            （平均レビュー: <span class="text-success fw-bold"><%= event.reviews.average(:rating).to_f.round(1) %></span>点）
+          </p>
+        
           <% end %>
           <% if event.user == current_user %>
             <%= link_to "編集", edit_user_event_path(event.user, event), class: "btn btn-warning btn-sm" %>

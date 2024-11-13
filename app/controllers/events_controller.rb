@@ -2,8 +2,18 @@ class EventsController < ApplicationController
   before_action :require_login, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   
-  def index
+  def upcoming
     @events = Event.upcoming.left_joins(:joins).group(:id).order('COUNT(joins.id) DESC')
+    @users = User.all
+  end
+
+  def past
+    @events = Event
+                .past
+                .left_joins(:reviews)
+                .select('events.*, COALESCE(AVG(reviews.rating), 0) AS average_rating')
+                .group('events.id')
+                .order(average_rating: :desc)
   end
 
   def new
