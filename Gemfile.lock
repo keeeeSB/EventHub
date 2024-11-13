@@ -110,6 +110,8 @@ GEM
       ssrf_filter (~> 1.0)
     concurrent-ruby (1.3.4)
     crass (1.0.6)
+    cssbundling-rails (1.4.1)
+      railties (>= 6.0.0)
     csv (3.3.0)
     date (3.4.0)
     debug (1.9.2)
@@ -304,6 +306,7 @@ DEPENDENCIES
   cancancan
   capybara
   carrierwave (~> 2.0)
+  cssbundling-rails
   debug
   importmap-rails
   jbuilder
