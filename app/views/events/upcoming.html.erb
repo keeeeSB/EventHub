@@ -1,7 +1,11 @@
-<h2 class="text-center mb-4">参加予定のイベント一覧</h2>
+<h2 class="text-center mb-4">未開催イベント一覧</h2>
+
+<h4 class="text-center mb-4">
+  <%= link_to "開催済みのイベントはこちら", past_user_events_path(@users), class: "btn btn-light" %>
+</h4>
 
 <div class="row">
-  <% @join_events.each do |event| %>
+  <% @events.each do |event| %>
     <div class="col-md-6 mb-4">
       <div class="card shadow-sm border-light">
         <% if logged_in? %>
@@ -31,9 +35,7 @@
           <% end %>
         <% end %>
         <div class="card-body">
-          <%= link_to user_event_path(current_user, event), class: "text-decoration-none text-dark" do %>
-            <h5 class="card-title"><strong><%= event.title %></strong></h5>
-          <% end %>
+          <h5 class="card-title"><strong><%= event.title %></strong></h5>
           <p class="card-text"><%= event.description.truncate(100) %></p>
           <p><strong>開催日時:</strong> <%= event.start_time.strftime("%Y年%m月%d日 %H:%M") %></p>
           <p><strong>開催場所:</strong> <%= event.location %></p>

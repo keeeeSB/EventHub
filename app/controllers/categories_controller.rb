@@ -12,6 +12,17 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def show
+    @category = Category.find(params[:id])
+    @events = @category.events
+                       .past
+                       .left_joins(:reviews)
+                       .select('events.*, COALESCE(AVG(reviews.rating), 0) AS average_rating')
+                       .group('events.id')
+                       .order('average_rating DESC')
+  end
+  
+
   private
 
     def category_params
