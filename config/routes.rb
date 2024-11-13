@@ -18,5 +18,5 @@ Rails.application.routes.draw do
     resources :favorites, only: [:index]
     resources :joins,     only: [:index]
   end
-  resources :categories, only: [:create]
+  resources :categories, only: [:create, :show]
 end

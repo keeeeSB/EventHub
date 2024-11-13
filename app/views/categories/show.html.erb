@@ -1,4 +1,6 @@
-<h2 class="text-center mb-4">開催済みイベント一覧</h2>
+<h2 class="text-center mb-4">
+  <span class="text-decoration-none text-primary fw-bold"><%= @category.name %></span>の開催済みイベント一覧
+</h2>
 
 <div class="row">
   <% @events.each do |event| %>
@@ -27,11 +29,7 @@
           <p><strong>開催日時:</strong> <%= event.start_time.strftime("%Y年%m月%d日 %H:%M") %></p>
           <p><strong>開催場所:</strong> <%= event.location %></p>
           <% if event.category.present? %>
-            <p><strong>カテゴリー:</strong>
-              <%= link_to category_path(event.category), class: "text-decoration-none text-primary fw-bold" do %>
-                <%= event.category.name %>
-              <% end %>
-            </p>
+            <p><strong>カテゴリー:</strong> <%= event.category.name %></p>
           <% end %>
           <% if event.reviews.present? %>
           <p>
