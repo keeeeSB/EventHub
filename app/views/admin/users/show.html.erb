@@ -1,0 +1,23 @@
+<h2 class="text-center mb-4">ユーザー詳細</h2>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <table class="table table-bordered">
+        <tr>
+          <th>名前</th>
+          <td><%= @user.name %></td>
+        </tr>
+        <tr>
+          <th>メールアドレス</th>
+          <td><%= @user.email %></td>
+        </tr>
+        <tr>
+          <th>自己紹介</th>
+          <td><%= @user.bio %></td>
+        </tr>
+      </table>
+      <%= link_to '戻る', admin_users_path, class: 'btn btn-secondary' %> <!-- ユーザー一覧に戻るリンク -->
+    </div>
+  </div>
+</div>
