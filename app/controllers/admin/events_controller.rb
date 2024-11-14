@@ -16,7 +16,8 @@ class Admin::EventsController < ApplicationController
   def update
     @event = Event.find(params[:id])
     if @event.update(event_params)
-      redirect_to admin_events_path, notice: 'イベントが更新されました。'
+      flash[:success] = "イベントを更新しました。"
+      redirect_to admin_events_path
     else
       render :edit
     end
@@ -25,7 +26,8 @@ class Admin::EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:id])
     @event.destroy
-    redirect_to admin_events_path, notice: 'イベントが削除されました。'
+    flash[:success] = "イベントを削除しました。"
+    redirect_to admin_events_path
   end
 
   private

@@ -16,8 +16,10 @@ class Admin::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to admin_users_path, notice: 'ユーザーが更新されました。'
+      flash[:success] =  "ユーザー情報を更新しました。"
+      redirect_to admin_users_path
     else
+      flash.now[:danger] = "メールアドレスが既に使用されています。他のメールアドレスを入力してください。"
       render :edit
     end
   end
@@ -25,12 +27,13 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to admin_users_path, notice: 'ユーザーが削除されました。'
+    flash[:success] = "ユーザーを削除しました。"
+    redirect_to admin_users_path
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :profile_image, :bio)
+    params.require(:user).permit(:name, :email, :profile_image, :bio, :admin)
   end
 end
