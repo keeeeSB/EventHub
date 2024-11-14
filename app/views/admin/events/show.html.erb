@@ -1,0 +1,19 @@
+<h1>イベント詳細</h1>
+
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3><%= @event.title %></h3>
+    </div>
+    <div class="card-body">
+      <p><strong>詳細:</strong> <%= @event.description %></p>
+      <p><strong>開始時刻:</strong> <%= @event.start_time.strftime('%Y-%m-%d %H:%M') %></p>
+      <p><strong>場所:</strong> <%= @event.location %></p>
+      <p><strong>カテゴリ:</strong> <%= @event.category.name %></p>
+    </div>
+    <div class="card-footer">
+      <%= link_to '編集', edit_admin_event_path(@event), class: 'btn btn-warning' %>
+      <%= link_to '戻る', admin_events_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>
