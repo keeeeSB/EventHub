@@ -1,0 +1,44 @@
+<h2 class="text-center mb-4">イベント編集</h2>
+
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h3>イベントを編集</h3>
+    </div>
+    <div class="card-body">
+      <%= form_with(model: @event, url: admin_event_path(@event), method: :patch, local: true) do |form| %>
+        <div class="form-group">
+          <%= form.label :title, 'タイトル' %>
+          <%= form.text_field :title, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :description, '詳細' %>
+          <%= form.text_area :description, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :start_time, '開始時刻' %>
+          <%= form.datetime_local_field :start_time, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :location, '場所' %>
+          <%= form.text_field :location, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.label :category_id, 'カテゴリ' %>
+          <%= form.collection_select :category_id, Category.all, :id, :name, { prompt: '選択してください' }, class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= form.submit '更新', class: 'btn btn-success' %>
+        </div>
+      <% end %>
+    </div>
+    <div class="card-footer">
+      <%= link_to '戻る', admin_event_path(@event), class: 'btn btn-secondary' %>
+    </div>
+  </div>
+</div>

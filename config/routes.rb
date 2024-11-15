@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    root 'events#index'  # 管理者用のトップページ
+
+    resources :events, only: [:index, :show, :edit, :update, :destroy]
+    resources :users, only: [:index, :show, :edit, :update, :destroy]
+    resources :reviews, only: [:index, :show, :destroy]
+  end
+  
   root "events#upcoming"
   get  "/signup", to: "users#new"
   post "/signup", to: "users#create"
