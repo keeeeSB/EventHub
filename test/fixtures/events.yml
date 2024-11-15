@@ -1,0 +1,8 @@
+event:
+  id: 1
+  title: タイトル
+  description: 説明文です。
+  start_time: <%= 2.days.from_now %>
+  location: 場所
+  user_id: 1
+  category_id: 1

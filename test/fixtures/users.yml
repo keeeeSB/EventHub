@@ -1,6 +1,8 @@
 Keisuke:
+  id: 1
   name: Keisuke
   email: keisuke@example.com
-  password_digest: <%= BCrypt::Password.create('password') %>
+  password_digest: <%= BCrypt::Password.create('password').to_s %>
   profile_image: nil
   bio: text
+  admin: true
