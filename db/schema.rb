@@ -69,7 +69,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_14_011208) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false, null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
   add_foreign_key "events", "categories"
