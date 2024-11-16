@@ -43,4 +43,29 @@ class EventCreationTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_match "編集したテストイベント", response.body
   end
+
+  test "イベント削除のテスト" do
+    log_in_as(@user)
+    assert_redirected_to @user
+    follow_redirect!
+
+    assert_difference "Event.count", 1 do
+      post user_events_path(@user), params: { event: { title: "テストイベント",
+                                                       description: "テストイベントです。",
+                                                       start_time: 2.days.from_now,
+                                                       location: "カフェ",
+                                                       category_id: @category.id } }
+      assert_redirected_to root_path
+      follow_redirect!
+      assert_match "テストイベント", response.body
+    end
+
+    assert_difference "Event.count", -1 do
+      delete user_event_path(@user, Event.last)
+    end
+
+    assert_redirected_to root_path
+    follow_redirect!
+    assert_no_match "テストイベント", response.body
+  end
 end
