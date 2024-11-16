@@ -6,3 +6,12 @@ Keisuke:
   profile_image: nil
   bio: text
   admin: true
+
+Natsuki:
+  id: 2
+  name: Natsuki
+  email: natsuki@example.com
+  password_digest: <%= BCrypt::Password.create('password').to_s %>
+  profile_image: nil
+  bio: text
+  admin: false
