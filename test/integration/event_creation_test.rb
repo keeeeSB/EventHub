@@ -62,10 +62,9 @@ class EventCreationTest < ActionDispatch::IntegrationTest
 
     assert_difference "Event.count", -1 do
       delete user_event_path(@user, Event.last)
+      assert_redirected_to root_path
+      follow_redirect!
+      assert_no_match "テストイベント", response.body
     end
-
-    assert_redirected_to root_path
-    follow_redirect!
-    assert_no_match "テストイベント", response.body
   end
 end
