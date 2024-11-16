@@ -15,5 +15,18 @@ class LoginTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to @user
     follow_redirect!
+    assert_match "プロフィール", response.body
+  end
+
+  test "ログアウト機能のテスト" do
+    log_in_as(@user)
+    assert_redirected_to @user
+    follow_redirect!
+
+    delete logout_path(@user)
+    assert_redirected_to root_path
+    follow_redirect!
+
+    assert_match "ログイン", response.body
   end
 end
