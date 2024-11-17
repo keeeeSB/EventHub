@@ -1,4 +1,5 @@
 <%= form_with(model: @event, url: user_events_path, local: true, class: "border p-4 shadow rounded") do |f| %>
+  <%= render "shared/error_messages", object: @event %>
 
   <div class="mb-3">
     <%= f.label :title, "タイトル", class: "form-label" %>
