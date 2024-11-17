@@ -1,0 +1,50 @@
+<div class="col-md-6 mb-4">
+  <div class="card shadow-sm border-light">
+    <% if logged_in? %>
+      <div class="position-absolute top-0 end-0 m-3">
+        <% if current_user.favorites.exists?(event_id: event.id) %>
+          <%= link_to user_event_favorite_path(current_user, event, current_user.favorites.find_by(event_id: event.id)), 
+                      data: { "turbo-method": :delete } do %>
+            <%= image_tag "star-fill.svg", alt: "お気に入り解除", width: 20, height: 20 %>
+          <% end %>
+        <% else %>
+          <%= link_to user_event_favorites_path(current_user, event), 
+                      data: { "turbo-method": :post } do %>
+            <%= image_tag "star.svg", alt: "お気に入り登録", width: 20, height: 20 %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="card-body">
+      <% if event.start_time.past? %>
+        <%= link_to user_event_path(event.user, event), class: "text-decoration-none text-dark" do %>
+          <h5 class="card-title"><strong><%= event.title %></strong></h5>
+        <% end %>
+      <% else %>
+        <h5 class="card-title"><strong><%= event.title %></strong></h5>
+      <% end %>
+      <p class="card-text"><%= event.description.truncate(100) %></p>
+      <p><strong>開催日時:</strong> <%= event.start_time.strftime("%Y年%m月%d日 %H:%M") %></p>
+      <p><strong>開催場所:</strong> <%= event.location %></p>
+      <% if event.category.present? %>
+        <p><strong>カテゴリー:</strong>
+          <%= link_to category_path(event.category), class: "text-decoration-none text-primary fw-bold" do %>
+            <%= event.category.name %>
+          <% end %>
+        </p>
+      <% end %>
+      <% if event.reviews.present? %>
+      <p>
+        <span class="text-success fw-bold"><%= event.reviews.count %></span> 件のレビューがあります。
+        （平均レビュー: <span class="text-success fw-bold"><%= event.reviews.average(:rating).to_f.round(1) %></span>点）
+      </p>
+    
+      <% end %>
+      <% if event.user == current_user %>
+        <%= link_to "編集", edit_user_event_path(event.user, event), class: "btn btn-warning btn-sm" %>
+        <%= link_to "削除", user_event_path(event.user, event), class: "btn btn-danger btn-sm",
+                                            data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" } %>
+      <% end %>
+    </div>
+  </div>
+</div>

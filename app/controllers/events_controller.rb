@@ -3,7 +3,11 @@ class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   
   def upcoming
-    @events = Event.upcoming.left_joins(:joins).group(:id).order('COUNT(joins.id) DESC')
+    @events = Event
+                .upcoming
+                .left_joins(:joins)
+                .group(:id)
+                .order('COUNT(joins.id) DESC')
     @users = User.all
   end
 

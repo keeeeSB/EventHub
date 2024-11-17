@@ -1,0 +1,5 @@
+review:
+  body: レビュー
+  rating: 4
+  user_id: 1
+  event_id: 2

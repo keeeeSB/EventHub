@@ -15,4 +15,9 @@ class UserTest < ActiveSupport::TestCase
     @user.email = " "
     assert_not @user.valid?
   end
+
+  test "passwordカラムのバリデーションテスト" do
+    @user.password = " "
+    assert_not @user.valid?
+  end
 end
