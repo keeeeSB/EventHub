@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       redirect_to @user
     else
       flash.now[:danger] = "登録できませんでした。"
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
