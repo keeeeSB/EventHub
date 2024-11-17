@@ -37,7 +37,7 @@ class EventsController < ApplicationController
       redirect_to root_path
     else
       flash.now[:danger] = "イベントを作成できませんでした。"
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -54,13 +54,13 @@ class EventsController < ApplicationController
       redirect_to root_path
     else
       flash.now[:danger] = "イベント情報を更新できませんでした。"
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @event.destroy
-    redirect_to root_path
+    redirect_to root_path, status: :see_other
   end
 
   private

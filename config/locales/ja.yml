@@ -1,0 +1,38 @@
+# config/locales/ja.yml
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      event: イベント
+      category: カテゴリー
+      favorite: お気に入り
+      join: 参加予定イベント
+      review: レビュー
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード再確認
+      event:
+        title: タイトル
+        description: 説明文
+        start_time: 開催日時
+        location: 開催場所
+        category: カテゴリー
+    errors:
+      messages:
+        blank: "を入力してください。"
+        invalid: "が無効です。"
+        taken: "はすでに使用されています。"
+        too_short: "%{count}文字以上で入力してください。"
+        too_long: "%{count}文字以内で入力してください。"
+  errors:
+    format: "%{attribute}%{message}"
+  helpers:
+    submit:
+      create: "%{model}を作成"
+      update: "%{model}を更新"
+  views:
+    welcome:
+      hello: "こんにちは、%{name}さん！"

@@ -8,7 +8,6 @@ class CategoriesController < ApplicationController
       redirect_to root_path
     else
       flash.now[:danger] = "カテゴリーを作成できませんでした。"
-      render :new
     end
   end
 

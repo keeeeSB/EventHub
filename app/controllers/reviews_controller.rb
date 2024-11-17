@@ -7,10 +7,10 @@ class ReviewsController < ApplicationController
     @review = current_user.reviews.build(review_params)
     if @review.save
       flash[:success] = "レビューを作成しました。"
+      redirect_to user_event_path(@event.user, @event)
     else
       flash.now[:danger] = "レビューを作成できませんでした。"
     end
-    redirect_to user_event_path(@event.user, @event)
   end
 
   def edit
@@ -21,17 +21,18 @@ class ReviewsController < ApplicationController
     @event = @review.event
     if @review.update(review_params)
       flash[:success] = "レビューを更新しました。"
+      redirect_to user_event_path(@event.user, @event)
     else
       flash.now[:danger] = "レビューを更新できませんでした。"
+      render :edit, status: :unprocessable_entity
     end
-    redirect_to user_event_path(@event.user, @event)
   end
 
   def destroy
     @event = @review.event
     @review.destroy
     flash[:success] = "レビューを削除しました。"
-    redirect_to user_event_path(@event.user, @event)
+    redirect_to user_event_path(@event.user, @event), status: :see_other
   end
 
   private
