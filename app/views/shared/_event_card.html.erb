@@ -2,6 +2,17 @@
   <div class="card shadow-sm border-light">
     <% if logged_in? %>
       <div class="position-absolute top-0 end-0 m-3">
+        <% if event.start_time.future? %>
+          <% if event.user != current_user %>
+            <% if current_user.joins.exists?(event_id: event.id) %>
+              <%= link_to "参加取り消し", user_event_join_path(current_user, event, current_user.joins.find_by(event_id: event.id)),
+                          data: { "turbo-method": :delete }, class: "btn btn-success btn-sm" %>
+            <% else %>
+              <%= link_to "参加申し込み", user_event_joins_path(current_user, event),
+                          data: { "turbo-method": :post }, class: "btn btn-outline-success btn-sm" %>
+            <% end %>
+          <% end %>
+        <% end %>
         <% if current_user.favorites.exists?(event_id: event.id) %>
           <%= link_to user_event_favorite_path(current_user, event, current_user.favorites.find_by(event_id: event.id)), 
                       data: { "turbo-method": :delete } do %>
